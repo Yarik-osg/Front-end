@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  color: dodgerblue;
+}
+.App h1 {
+  color: black;
+}
+.registrationForm{
+  color: black;
 }
 
 .App-logo {
@@ -36,3 +43,5 @@
     transform: rotate(360deg);
   }
 }
+
+
