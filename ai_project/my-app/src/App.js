@@ -8,10 +8,10 @@ import ResetPasswordPage2 from "./components/reset_password_page/ResetPasswordPa
 const App = () => {
   return (
     <div className="App">
-        {/*<LoginPage />*/}
+        <LoginPage />
         {/*<RegistrationPage/>*/}
         {/*<ResetPasswordPage1 />*/}
-        <ResetPasswordPage2 />
+        {/*<ResetPasswordPage2 />*/}
     </div>
   )
 }

@@ -22,8 +22,8 @@ let visible_password = () => {
 }
 const LoginPage = () => {
     return (
-        <div className={classes.App}>
-            <header className={classes.header}>
+        <div >
+            <header>
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
                 <h1>Login</h1>
             </header>
@@ -57,11 +57,11 @@ const LoginPage = () => {
                                 <input type="checkbox" onClick={visible_password}/>
                             </div>
                         </div>
-                        <div>
-                            <label className={classes.checkbox}>
-                                remember me?<input type="checkbox" name="remember_name" className={classes.checkbox}/>
+                        <div >
+                            <label >
+                                remember me?<input className={classes.checkbox} type="checkbox" name="remember_name" />
                                 forgot password?
-                                <button type="submit" name="reset_password" className={classes.checkbox}/>
+                                <button  type="submit" name="reset_password" />
                             </label>
                             {/*<Link to="forgot-password" className="btn btn-link pr-0">Forgot Password?</Link>*/}
 
