@@ -3,7 +3,7 @@ import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Login_index.module.css"
-//import Link from "@material-ui/core/Link";
+
 
 
 const validationSchema = Yup.object().shape({
@@ -62,7 +62,7 @@ const LoginPage = () => {
                             <label >
                                 remember me?<input className={classes.checkbox} type="checkbox" name="remember_name" />
                             </label>
-                            <Link to="forgot-password" className="btn btn-link pr-0">Forgot Password?</Link>
+                            <Link to="/resetpassword1" className="btn btn-link pr-0">Forgot Password?</Link>
 
                         </div>
                         <div>
