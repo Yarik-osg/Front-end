@@ -1,8 +1,9 @@
 import React from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
-//import {Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import classes from "./Login_index.module.css"
+//import Link from "@material-ui/core/Link";
 
 
 const validationSchema = Yup.object().shape({
@@ -60,10 +61,8 @@ const LoginPage = () => {
                         <div >
                             <label >
                                 remember me?<input className={classes.checkbox} type="checkbox" name="remember_name" />
-                                forgot password?
-                                <button  type="submit" name="reset_password" />
                             </label>
-                            {/*<Link to="forgot-password" className="btn btn-link pr-0">Forgot Password?</Link>*/}
+                            <Link to="forgot-password" className="btn btn-link pr-0">Forgot Password?</Link>
 
                         </div>
                         <div>
