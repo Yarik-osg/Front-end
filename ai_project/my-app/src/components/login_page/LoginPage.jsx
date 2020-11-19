@@ -3,7 +3,7 @@ import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Login_index.module.css"
-
+import { withRouter } from 'react-router-dom'
 
 
 const validationSchema = Yup.object().shape({
@@ -21,7 +21,13 @@ let visible_password = () => {
         x.type = "password";
     }
 }
-const LoginPage = () => {
+
+const LoginPage = (props) => {
+    const { history } = props;
+    const handleMenuClick = (pageURL) => {
+        history.push(pageURL);
+
+    };
     return (
         <div >
             <header>
@@ -66,7 +72,7 @@ const LoginPage = () => {
 
                         </div>
                         <div>
-                            <button type="submit">Create!</button>
+                            <button type="submit"  onClick={() => handleMenuClick("/register")}>Create!</button>
                             <button type="submit">Login!</button>
                         </div>
                         <hr/>
@@ -82,6 +88,6 @@ const LoginPage = () => {
         </div>
     )
 }
-export default LoginPage
+export default withRouter (LoginPage)
 
 
