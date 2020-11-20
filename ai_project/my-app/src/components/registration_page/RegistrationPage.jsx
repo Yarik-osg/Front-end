@@ -1,7 +1,7 @@
 import React from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
-//import classes from "./Registration_index.module.css"
+import classes from "./Registration_index.module.css"
 
 
 const validationSchema = Yup.object().shape({
@@ -21,7 +21,7 @@ const RegistrationPage = () => {
             <header >
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
                 <p></p>
-            <h1 >Fill up the registration form</h1>
+            <h1>Fill up the registration form</h1>
             </header>
             <Formik
                 initialValues={{firstName: '', lastName: '', email: '', password: ''}}

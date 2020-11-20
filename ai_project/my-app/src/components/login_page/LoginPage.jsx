@@ -68,7 +68,7 @@ const LoginPage = (props) => {
                             <label >
                                 remember me?<input className={classes.checkbox} type="checkbox" name="remember_name" />
                             </label>
-                            <Link to="/resetpassword1" className="btn btn-link pr-0">Forgot Password?</Link>
+                            <Link to="/resetpassword1"  className="btn btn-link pr-0" >Forgot Password?</Link>
 
                         </div>
                         <div>

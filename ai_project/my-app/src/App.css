@@ -4,6 +4,16 @@
 }
 .App h1 {
   color: black;
+  font-family: "Trebuchet MS";
+}
+.App h4 {
+  color: black;
+  font-family: "Trebuchet MS";
+}
+
+.App label{
+  color: black;
+  font-family: "Trebuchet MS";
 }
 .registrationForm{
   color: black;
