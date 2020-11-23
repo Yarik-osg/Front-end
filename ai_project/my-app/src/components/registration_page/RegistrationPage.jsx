@@ -1,6 +1,7 @@
 import React from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
+import axios from "axios"
 import classes from "./Registration_index.module.css"
 
 
@@ -28,6 +29,18 @@ const RegistrationPage = () => {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     console.log(values)
+                   // values = JSON.stringify(values)
+                    //console.log(values)
+                    axios
+                        .post('https://jsonplaceholder.typicode.com/todos',
+                            {
+                                 firstname: values["firstName"],
+                                 lastname: values["lastName"],
+                                 email: values["email"],
+                                 password: values["password"]
+                            }
+                        ).then(res => console.log(res))
+                        .catch(err => console.log(err))
                 }}>
                 {({errors, touched}) => (
                     <Form >
