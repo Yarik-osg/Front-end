@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Login_index.module.css"
 import { withRouter } from 'react-router-dom'
-
+import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+const eye = <FontAwesomeIcon icon={faEye} />;
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -13,23 +16,22 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .required('Required')
 });
-let visible_password = () => {
-    const x = document.getElementById("myInput");
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    }
-}
+
+
 
 const LoginPage = (props) => {
+
+    const togglePasswordVisibility = () => {
+        setPasswordShown(!passwordShown);
+    };
+    const { register } = useForm();
     const { history } = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
-
     };
+    const [passwordShown, setPasswordShown] = useState(false);
     return (
-        <div >
+        <div className="LoginPage">
             <header>
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
                 <h1>Login</h1>
@@ -53,24 +55,22 @@ const LoginPage = (props) => {
                                 <ErrorMessage name="email"/>
                             </div>
                             <div>
-                                <div><label>Password </label></div>
+                                <div className="pass-wrapper"><label>Password </label></div>
                                 <Field
                                     placeholder="password"
                                     name="password"
-                                    type="password"
+                                    type={passwordShown ? "text" : "password"}
                                     id="myInput"
+                                    ref={register({ required: "This is required." })}
                                 />
+                                <i onClick={togglePasswordVisibility}>{eye}</i>
                                 <ErrorMessage name="password"/>
-                                <input type="checkbox" onClick={visible_password}/>
                             </div>
                         </div>
                         <div >
-                            <label >
-                                remember me?<input className={classes.checkbox} type="checkbox" name="remember_name" />
-                            </label>
-                            <Link to="/resetpassword1"  className="btn btn-link pr-0" >Forgot Password?</Link>
-
+                            <Link to="/resetpassword1"   >Forgot Password?</Link>
                         </div>
+
                         <div>
                             <button type="submit"  onClick={() => handleMenuClick("/register")}>Create!</button>
                             <button type="submit">Login!</button>
@@ -89,5 +89,3 @@ const LoginPage = (props) => {
     )
 }
 export default withRouter (LoginPage)
-
-
