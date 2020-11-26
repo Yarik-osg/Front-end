@@ -1,8 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
 import classes from "../login_page/Login_index.module.css";
-
+import { useForm } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+const eye = <FontAwesomeIcon icon={faEye} />;
 
 const validationSchema = Yup.object().shape({
     newPassword: Yup.string()
@@ -12,6 +16,7 @@ const validationSchema = Yup.object().shape({
         .oneOf([Yup.ref('newPassword'), ''],  "Passwords must match")
 
 });
+/*
 let visible_password = () => {
     const x = document.getElementById("myInput");
     const x2 = document.getElementById("myInput2")
@@ -23,7 +28,17 @@ let visible_password = () => {
         x2.type = "password"
     }
 }
+*/
+
+
 const ResetPasswordPage2 = () =>{
+    const togglePasswordVisibility = () => {
+        setPasswordShown(!passwordShown);
+    };
+
+
+    const [passwordShown, setPasswordShown] = useState(false);
+
     return (
         <div>
             <header className={classes.header}>
@@ -47,7 +62,7 @@ const ResetPasswordPage2 = () =>{
                                 <Field
                                     placeholder="new password"
                                     name="newPassword"
-                                    type="password"
+                                    type={passwordShown ? "text" : "password"}
                                     id = "myInput"
                                 />
                                 <ErrorMessage name="newPassword"/>
@@ -57,13 +72,13 @@ const ResetPasswordPage2 = () =>{
                                 <Field
                                     placeholder="new password again"
                                     name="confirmPassword"
-                                    type="password"
+                                    type={passwordShown ? "text" : "password"}
                                     id = "myInput2"
                                 />
                                 <ErrorMessage name="confirmPassword"/>
                             </div>
                             <h4>visibility</h4>
-                            <input type="checkbox" onClick={visible_password}/>
+                            <i onClick={togglePasswordVisibility}>{eye}</i>
                         </div>
                         <div>
                             <button type="submit">

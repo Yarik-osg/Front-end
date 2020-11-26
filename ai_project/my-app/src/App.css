@@ -18,6 +18,9 @@
 .registrationForm{
   color: black;
 }
+.ListOfPosts{
+  text-align: left;
+}
 
 .App-logo {
   height: 40vmin;

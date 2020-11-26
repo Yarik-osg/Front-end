@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const validationSchema = Yup.object().shape({
@@ -24,7 +25,7 @@ const LoginPage = (props) => {
     const togglePasswordVisibility = () => {
         setPasswordShown(!passwordShown);
     };
-    const { register } = useForm();
+
     const { history } = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
@@ -41,6 +42,14 @@ const LoginPage = (props) => {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     console.log(values)
+                    axios
+                        .post('https://jsonplaceholder.typicode.com/todos',
+                            {
+                                email: values["email"],
+                                password: values["password"]
+                            }
+                        ).then(res => console.log(res))
+                        .catch(err => console.log(err))
                 }}>
                 {({errors, touched}) => (
                     <Form>
@@ -61,7 +70,7 @@ const LoginPage = (props) => {
                                     name="password"
                                     type={passwordShown ? "text" : "password"}
                                     id="myInput"
-                                    ref={register({ required: "This is required." })}
+
                                 />
                                 <i onClick={togglePasswordVisibility}>{eye}</i>
                                 <ErrorMessage name="password"/>
