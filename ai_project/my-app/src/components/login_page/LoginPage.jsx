@@ -6,6 +6,8 @@ import classes from "./Login_index.module.css"
 import {withRouter} from 'react-router-dom'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
+import logo from "../../music.svg"
+import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
 
 const eye = <FontAwesomeIcon icon={faEye}/>;
 
@@ -32,7 +34,7 @@ const LoginPage = (props) => {
         <div className={classes.loginPage}>
             <div className={classes.container}>
                 <header>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+                    <img src={logo} alt=""/>
                     <h2>Login</h2>
                 </header>
                 <Formik
@@ -43,7 +45,7 @@ const LoginPage = (props) => {
                     }}>
                     {({errors, touched}) => (
                         <Form>
-                            <div>
+                            <div className={classes.inputBlock}>
                                 <div className={classes.passwordWr}>
                                     <div><label>E-mail </label></div>
                                     <Field
@@ -73,11 +75,11 @@ const LoginPage = (props) => {
 
                                 </div>
                             </div>
-                            <div>
+                            <div className={classes.linkPass}>
                                 <Link to="/resetpassword1">Forgot Password?</Link>
                             </div>
 
-                            <div>
+                            <div className={classes.buttons}>
                                 <button className={classes.btn} type="submit"
                                         onClick={() => handleMenuClick("/register")}>Create!
                                 </button>
@@ -85,10 +87,10 @@ const LoginPage = (props) => {
                             </div>
                             <hr/>
                             <div>
-                                <label>
-                                    <button className={classes.btn} type="submit">Gmail</button>
-                                    <button className={classes.btn} type="submit">Facebook</button>
-                                </label>
+                                    {/*<button className={classes.btn} type="submit">Gmail</button>*/}
+                                    {/*<button className={classes.btn} type="submit">Facebook</button>*/}
+                                    <FacebookLoginButton className={classes.btn} type="submit" />
+                                    <GoogleLoginButton onClick={() => alert("Hello")} />
                             </div>
                         </Form>
                     )}

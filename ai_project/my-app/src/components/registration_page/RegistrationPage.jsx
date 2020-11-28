@@ -3,6 +3,7 @@ import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import axios from "axios"
 import classes from "./Registration_index.module.css"
+import logo from "../../music.svg";
 
 
 const validationSchema = Yup.object().shape({
@@ -18,11 +19,12 @@ const validationSchema = Yup.object().shape({
 });
 const RegistrationPage = () => {
     return (
-        <div>
+        <div className={classes.loginPage}>
+            <div className={classes.container}>
             <header >
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+                <img src={logo} alt=""/>
                 <p></p>
-            <h1>Fill up the registration form</h1>
+            <h2>Fill up the registration form</h2>
             </header>
             <Formik
                 initialValues={{firstName: '', lastName: '', email: '', password: ''}}
@@ -44,7 +46,7 @@ const RegistrationPage = () => {
                 }}>
                 {({errors, touched}) => (
                     <Form >
-                        <div >
+                        <div className={classes.inputBlock}>
                             <div>
                                 <div><label>First name </label></div>
                                 <Field
@@ -91,6 +93,7 @@ const RegistrationPage = () => {
                     </Form>
                 )}
             </Formik>
+            </div>
         </div>
     )
 }
