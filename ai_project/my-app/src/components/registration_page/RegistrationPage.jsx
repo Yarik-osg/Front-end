@@ -84,7 +84,7 @@ const RegistrationPage = () => {
                             </div>
                         </div>
                         <div>
-                            <button type="submit">
+                            <button  className={classes.btn} type="submit">
                                 Sign Up!
                             </button>
                         </div>

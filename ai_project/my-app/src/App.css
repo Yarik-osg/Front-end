@@ -14,6 +14,7 @@
 .App label{
   color: black;
   font-family: "Trebuchet MS";
+  text-align: left !important;
 }
 .registrationForm{
   color: black;

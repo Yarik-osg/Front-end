@@ -3,11 +3,11 @@ import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Login_index.module.css"
-import { withRouter } from 'react-router-dom'
-import { useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-const eye = <FontAwesomeIcon icon={faEye} />;
+import {withRouter} from 'react-router-dom'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye} from "@fortawesome/free-solid-svg-icons";
+
+const eye = <FontAwesomeIcon icon={faEye}/>;
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -18,74 +18,83 @@ const validationSchema = Yup.object().shape({
 });
 
 
-
 const LoginPage = (props) => {
 
     const togglePasswordVisibility = () => {
         setPasswordShown(!passwordShown);
     };
-    const { register } = useForm();
-    const { history } = props;
+    const {history} = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
     const [passwordShown, setPasswordShown] = useState(false);
     return (
-        <div className="LoginPage">
-            <header>
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
-                <h1>Login</h1>
-            </header>
-            <Formik
-                initialValues={{email: '', password: ''}}
-                validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    console.log(values)
-                }}>
-                {({errors, touched}) => (
-                    <Form>
-                        <div>
+        <div className={classes.loginPage}>
+            <div className={classes.container}>
+                <header>
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+                    <h2>Login</h2>
+                </header>
+                <Formik
+                    initialValues={{email: '', password: ''}}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        console.log(values)
+                    }}>
+                    {({errors, touched}) => (
+                        <Form>
                             <div>
-                                <div><label>E-mail </label></div>
-                                <Field
-                                    placeholder="email@smth.com"
-                                    name="email"
-                                    type="email"
-                                />
-                                <ErrorMessage name="email"/>
-                            </div>
-                            <div>
-                                <div className="pass-wrapper"><label>Password </label></div>
-                                <Field
-                                    placeholder="password"
-                                    name="password"
-                                    type={passwordShown ? "text" : "password"}
-                                    id="myInput"
-                                    ref={register({ required: "This is required." })}
-                                />
-                                <i onClick={togglePasswordVisibility}>{eye}</i>
-                                <ErrorMessage name="password"/>
-                            </div>
-                        </div>
-                        <div >
-                            <Link to="/resetpassword1"   >Forgot Password?</Link>
-                        </div>
+                                <div className={classes.passwordWr}>
+                                    <div><label>E-mail </label></div>
+                                    <Field
+                                        classname={classes.field}
+                                        placeholder="email@smth.com"
+                                        name="email"
+                                        type="email"
+                                    />
+                                    <div className={classes.error}>
+                                        <ErrorMessage name="email"/>
+                                    </div>
+                                </div>
+                                <div className={classes.passwordWr}>
+                                    <div className={classes.passWrapper}><label>Password </label></div>
+                                    <Field
+                                        placeholder="password"
+                                        name="password"
+                                        type={passwordShown ? "text" : "password"}
+                                        id="myInput"
+                                    />
+                                    <div className={classes.eye}>
+                                        <i onClick={togglePasswordVisibility}>{eye}</i>
+                                    </div>
+                                    <div className={classes.error}>
+                                        <ErrorMessage name="password"/>
+                                    </div>
 
-                        <div>
-                            <button type="submit"  onClick={() => handleMenuClick("/register")}>Create!</button>
-                            <button type="submit">Login!</button>
-                        </div>
-                        <hr/>
-                        <div>
-                            <label>
-                                <button type="submit">Gmail</button>
-                                <button type="submit">Facebook</button>
-                            </label>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+                                </div>
+                            </div>
+                            <div>
+                                <Link to="/resetpassword1">Forgot Password?</Link>
+                            </div>
+
+                            <div>
+                                <button className={classes.btn} type="submit"
+                                        onClick={() => handleMenuClick("/register")}>Create!
+                                </button>
+                                <button className={classes.btn} type="submit">Login!</button>
+                            </div>
+                            <hr/>
+                            <div>
+                                <label>
+                                    <button className={classes.btn} type="submit">Gmail</button>
+                                    <button className={classes.btn} type="submit">Facebook</button>
+                                </label>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     )
 }
-export default withRouter (LoginPage)
+export default withRouter(LoginPage)

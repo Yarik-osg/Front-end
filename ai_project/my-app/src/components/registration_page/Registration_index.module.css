@@ -64,16 +64,13 @@ body {
 /*}*/
 
 .btn {
-  display: block;
-  width: 100%;
-  padding: 20px;
-  font-family: Roboto;
-  -webkit-appearance: none;
-  outline: 0;
-  border: 0;
+  padding: 10px 15px;
+  background-color: rgb(70, 153, 179);
   color: white;
-  background: #ABA194;
-  transition: 0.3s;
+  border: 1px solid rgb(70, 153, 179);
+  transition: ease-in-out background-color 250ms, ease-in-out color 250ms;
+  border-radius: 4px;
+  margin-left: 10px;
 
 }
 

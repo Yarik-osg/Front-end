@@ -1,7 +1,7 @@
 import React from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
-import classes from "../login_page/Login_index.module.css";
+//import classes from "../login_page/Login_index.module.css";
 
 
 const validationSchema = Yup.object().shape({
@@ -14,7 +14,9 @@ const validationSchema = Yup.object().shape({
 const ResetPasswordPage1 = () =>{
     return (
         <div>
-        <header className={classes.header}>
+        <header
+            //className={classes.header}
+        >
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
             <h1>To reset your password, please enter your email first</h1>
         </header>
