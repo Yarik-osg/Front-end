@@ -25,7 +25,10 @@ const ListOfPosts = () => {
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
-    const perPage = (postsPerPage) => setPostsPerPage(postsPerPage)
+    const perPage = (postsPerPage) => {
+        setPostsPerPage(postsPerPage)
+        setCurrentPage(1)
+    }
 
     return(
         <div>
