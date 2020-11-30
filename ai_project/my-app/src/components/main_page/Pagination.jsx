@@ -19,7 +19,10 @@ const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
                     </li>
                 ))}
 
+
                    {/* {values.map((size) => (
+                {/* {values.map((size) => (
+
                         <li key={size} value={size} className="page-item ">
                             <button onClick={() => perPage(size)} className= "page-link">
                                 {size}
@@ -40,3 +43,4 @@ const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
 }
 
 export default Pagination
+

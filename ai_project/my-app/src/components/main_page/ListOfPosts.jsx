@@ -28,14 +28,16 @@ const ListOfPosts = () => {
     const perPage = (postsPerPage) => setPostsPerPage(postsPerPage)
 
     return(
-      <div>
-          <h1>Testing Pagination</h1>
+        <div>
+            <h1>Testing Pagination</h1>
             <div className="container mt-5">
-            <Posts posts={currentPosts} loading={loading} />
-            <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} perPage = {perPage}/>
+
+                <Posts posts={currentPosts} loading={loading} />
+                <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} perPage = {perPage}/>
+
             </div>
 
-      </div>
+        </div>
 
     )
 
