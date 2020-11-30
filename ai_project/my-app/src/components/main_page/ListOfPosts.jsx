@@ -8,7 +8,7 @@ const ListOfPosts = () => {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(15)
+    const [postsPerPage, setPostsPerPage] = useState(10)
 
     useEffect( () => {
         setLoading(true)
@@ -25,16 +25,17 @@ const ListOfPosts = () => {
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    const perPage = (postsPerPage) => setPostsPerPage(postsPerPage)
 
     return(
-      <div>
-          <h1>Testing Pagination</h1>
+        <div>
+            <h1>Testing Pagination</h1>
             <div className="container mt-5">
-            <Posts posts={currentPosts} loading={loading} />
-            <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate}/>
+                <Posts posts={currentPosts} loading={loading} />
+                <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} perPage = {perPage}/>
             </div>
 
-      </div>
+        </div>
 
     )
 
