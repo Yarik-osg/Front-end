@@ -28,7 +28,7 @@ const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
                     ))}*/}
 
             </ul>
-            <select className="page-link" onChange={event => perPage(event.currentTarget.value)}>
+            <select className="page-link" defaultValue="10" onChange={event => perPage(event.currentTarget.value)}>
                 {values.map((size) => (
                     <option key={size} value={size}>
                         {size}
