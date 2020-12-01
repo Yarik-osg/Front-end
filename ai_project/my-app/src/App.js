@@ -7,6 +7,8 @@ import ResetPasswordPage1 from "./components/reset_password_page/ResetPasswordPa
 import ResetPasswordPage2 from "./components/reset_password_page/ResetPasswordPage2";
 import MainPage from "./components/main_page/MainPage"
 import {BrowserRouter as Router,Switch, Route} from "react-router-dom";
+import {ProtectedRoute} from "./PrivateRoute";
+import {Users} from "./Users";
 const App = () => {
   return (
       // <BrowserRouter>
@@ -18,6 +20,8 @@ const App = () => {
                 <Route path ="/resetpassword1" component={ResetPasswordPage1} />
                 <Route path ="/resetpassword2" component={ResetPasswordPage2} />
                 <Route path = "/main" component= {MainPage} />
+                <ProtectedRoute exact path="/Users" component={Users}/>
+                <Route path="*" component={()=>"404 Not found"}/>
             </Switch>
         </Router>
     </div>

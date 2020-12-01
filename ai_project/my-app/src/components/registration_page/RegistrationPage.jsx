@@ -4,6 +4,7 @@ import *as Yup from "yup"
 import axios from "axios"
 import classes from "./Registration_index.module.css"
 import logo from "../../music.svg";
+import Auth from "../../Auth";
 
 
 const validationSchema = Yup.object().shape({
@@ -17,7 +18,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .required('Required')
 });
-const RegistrationPage = () => {
+const RegistrationPage = (props) => {
     return (
         <div className={classes.loginPage}>
             <div className={classes.container}>
@@ -86,7 +87,15 @@ const RegistrationPage = () => {
                             </div>
                         </div>
                         <div>
-                            <button  className={classes.btn} type="submit">
+                            <button  className={classes.btn}
+                                     onClick={
+                                         () => {
+                                             Auth.login(() => {
+                                                 props.history.push("/Users");
+                                             })
+                                         }
+                                     }
+                                     type="submit">
                                 Sign Up!
                             </button>
                         </div>
