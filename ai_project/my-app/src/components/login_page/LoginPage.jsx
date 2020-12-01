@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../music.svg"
 import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
+import auth from "../../auth";
 
 const eye = <FontAwesomeIcon icon={faEye}/>;
 
@@ -83,14 +84,23 @@ const LoginPage = (props) => {
                                 <button className={classes.btn} type="submit"
                                         onClick={() => handleMenuClick("/register")}>Create!
                                 </button>
-                                <button className={classes.btn} type="submit">Login!</button>
+                                <button className={classes.btn}
+                                        onClick={
+                                            () => {
+                                                auth.login(() => {
+                                                    props.history.push("/Users");
+                                                })
+                                            }
+                                        }
+                                        type="submit">Login!
+                                </button>
                             </div>
                             <hr/>
                             <div>
                                 {/*<button className={classes.btn} type="submit">Gmail</button>*/}
                                 {/*<button className={classes.btn} type="submit">Facebook</button>*/}
-                                <FacebookLoginButton className={classes.btn} type="submit" />
-                                <GoogleLoginButton onClick={() => alert("Hello")} />
+                                <FacebookLoginButton className={classes.btn} type="submit"/>
+                                <GoogleLoginButton onClick={() => alert("Hello")}/>
                             </div>
                         </Form>
                     )}
