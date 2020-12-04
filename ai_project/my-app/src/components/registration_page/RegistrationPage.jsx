@@ -4,7 +4,7 @@ import *as Yup from "yup"
 import axios from "axios"
 import classes from "./Registration_index.module.css"
 import logo from "../../music.svg";
-import auth from "../../auth";
+import checkAuth from "../../checkAuth";
 
 
 const validationSchema = Yup.object().shape({
@@ -31,19 +31,23 @@ const RegistrationPage = (props) => {
                     initialValues={{firstName: '', lastName: '', email: '', password: ''}}
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
+
                         console.log(values)
-                        // values = JSON.stringify(values)
-                        //console.log(values)
                         axios
-                            .post('https://jsonplaceholder.typicode.com/todos',
+                            .post('http://localhost:8080/registration',
                                 {
-                                    firstname: values["firstName"],
-                                    lastname: values["lastName"],
+                                    firstName: values["firstName"],
+                                    lastName: values["lastName"],
                                     email: values["email"],
                                     password: values["password"]
                                 }
-                            ).then(res => console.log(res))
-                            .catch(err => console.log(err))
+                            ).then(res => {
+                            localStorage.setItem('token',res.data.token)
+                                console.log(res)
+                            checkAuth.authorise();
+                            props.history.push("/users");
+                            })
+                            .catch(err => console.log(err));
                     }}>
                     {({errors, touched}) => (
                         <Form>
@@ -88,13 +92,7 @@ const RegistrationPage = (props) => {
                             </div>
                             <div>
                                 <button className={classes.btn}
-                                        onClick={
-                                            () => {
-                                                auth.login(() => {
-                                                    props.history.push("/Users");
-                                                })
-                                            }
-                                        }
+
                                         type="submit">
                                     Sign Up!
                                 </button>
