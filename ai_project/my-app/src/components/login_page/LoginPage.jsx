@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
@@ -31,6 +30,7 @@ const LoginPage = (props) => {
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
+    const [error, setError] = useState(" ");
     const [passwordShown, setPasswordShown] = useState(false);
     return (
         <div className={classes.loginPage}>
@@ -51,12 +51,23 @@ const LoginPage = (props) => {
                                     password: values["password"]
                                 }
                             ).then(res => {
-                            localStorage.setItem('token',res.data.token)
+                            localStorage.setItem('token', res.data.token)
                             console.log(res)
                             checkAuth.authorise();
                             props.history.push("/users");
                         })
-                            .catch(err => console.log(err))
+                            .catch(err => {
+                                console.log(err)
+                                if (err.response) {
+                                    console.log(err.response.status);
+                                    //setError(err.response.status)
+                                    if (err.response.status === 409)
+                                        setError("User already exist. Change email.")
+                                    // const error= localStorage.getItem("error")
+                                    // console.log(error);
+
+                                }
+                            })
                         console.log(localStorage.getItem('token'))
 
 
@@ -65,6 +76,9 @@ const LoginPage = (props) => {
                         <Form
                             //    onSubmit={this.handleSubmit}
                         >
+                            <div>
+                                {error}
+                            </div>
                             <div className={classes.inputBlock}>
                                 <div className={classes.passwordWr}>
                                     <div><label>E-mail </label></div>
@@ -74,50 +88,50 @@ const LoginPage = (props) => {
                                         name="email"
                                         type="email"
 
-                                />
-                                <div className={classes.error}>
-                                    <ErrorMessage name="email"/>
+                                    />
+                                    <div className={classes.error}>
+                                        <ErrorMessage name="email"/>
+                                    </div>
+                                </div>
+                                <div className={classes.passwordWr}>
+                                    <div className={classes.passWrapper}><label>Password </label></div>
+                                    <Field
+                                        placeholder="password"
+                                        name="password"
+                                        type={passwordShown ? "text" : "password"}
+                                        id="myInput"
+                                    />
+                                    <div className={classes.eye}>
+                                        <i onClick={togglePasswordVisibility}>{eye}</i>
+                                    </div>
+                                    <div className={classes.error}>
+                                        <ErrorMessage name="password"/>
+                                    </div>
+
                                 </div>
                             </div>
-                            <div className={classes.passwordWr}>
-                                <div className={classes.passWrapper}><label>Password </label></div>
-                                <Field
-                                    placeholder="password"
-                                    name="password"
-                                    type={passwordShown ? "text" : "password"}
-                                    id="myInput"
-                                />
-                                <div className={classes.eye}>
-                                    <i onClick={togglePasswordVisibility}>{eye}</i>
-                                </div>
-                                <div className={classes.error}>
-                                    <ErrorMessage name="password"/>
-                                </div>
-
+                            <div className={classes.linkPass}>
+                                <Link to="/resetpassword1">Forgot Password?</Link>
                             </div>
-                        </div>
-                        <div className={classes.linkPass}>
-                        <Link to="/resetpassword1">Forgot Password?</Link>
-                        </div>
 
-                        <div className={classes.buttons}>
-                        <button className={classes.btn} type="submit"
-                        onClick={() => handleMenuClick("/register")}>Create!
-                        </button>
-                        <button className={classes.btn}
+                            <div className={classes.buttons}>
+                                <button className={classes.btn} type="submit"
+                                        onClick={() => handleMenuClick("/register")}>Create!
+                                </button>
+                                <button className={classes.btn}
 
-                        type="submit">Login!
-                        </button>
-                        </div>
-                        <hr/>
-                        <div>
-                        {/*<button className={classes.btn} type="submit">Gmail</button>*/}
-                        {/*<button className={classes.btn} type="submit">Facebook</button>*/}
-                        <FacebookLoginButton className={classes.btn} type="submit"/>
-                        <GoogleLoginButton onClick={() => alert("Hello")}/>
-                        </div>
+                                        type="submit">Login!
+                                </button>
+                            </div>
+                            <hr/>
+                            <div>
+                                {/*<button className={classes.btn} type="submit">Gmail</button>*/}
+                                {/*<button className={classes.btn} type="submit">Facebook</button>*/}
+                                <FacebookLoginButton className={classes.btn} type="submit"/>
+                                <GoogleLoginButton onClick={() => alert("Hello")}/>
+                            </div>
                         </Form>
-                        )}
+                    )}
                 </Formik>
             </div>
         </div>

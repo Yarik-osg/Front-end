@@ -13,24 +13,7 @@ import {Link} from "react-router-dom";
 import {checkAuth} from "./checkAuth";
 
 const App = () => {
-   // const [loggedIn, setLoggedIn] = useState(false);
-   // const [user, setUser] = useState();
 
-    // const verify = () => {
-    //     if (checkAuth.authorise()) {
-    //         setLoggedIn(true);
-    //         setUser(checkAuth.userID);
-    //         console.log('logged in');
-    //         return true;
-    //     } else {
-    //         console.log('not logged in');
-    //         return false;
-    //     }
-    // }
-    //
-    // useEffect(() => {
-    //     verify()
-    // }, [loggedIn]);
   return (
     <div className="App">
         <Router>

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Formik, Field, ErrorMessage, Form,} from "formik";
 import *as Yup from "yup"
 import axios from "axios"
 import classes from "./Registration_index.module.css"
 import logo from "../../music.svg";
 import checkAuth from "../../checkAuth";
+
 
 
 const validationSchema = Yup.object().shape({
@@ -18,7 +19,10 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .required('Required')
 });
+
+
 const RegistrationPage = (props) => {
+    const [error, setError] = useState(" ");
     return (
         <div className={classes.loginPage}>
             <div className={classes.container}>
@@ -43,14 +47,31 @@ const RegistrationPage = (props) => {
                                 }
                             ).then(res => {
                             localStorage.setItem('token',res.data.token)
-                                console.log(res)
+                            // setError(res.status)
+                            const status1=res.status
+                            console.log(status1)
                             checkAuth.authorise();
                             props.history.push("/users");
                             })
-                            .catch(err => console.log(err));
+                            .catch(err => {
+                                if (err.response) {
+                                   console.log(err.response.status);
+                                    //setError(err.response.status)
+                                    if (err.response.status === 409)
+                                        setError("User already exist. Change email.")
+                                    // const error= localStorage.getItem("error")
+                                    // console.log(error);
+
+                                }
+                            });
+
+
                     }}>
                     {({errors, touched}) => (
                         <Form>
+                                <div >
+                                   {error}
+                                </div>
                             <div className={classes.inputBlock}>
                                 <div>
                                     <div><label>First name </label></div>
@@ -69,7 +90,7 @@ const RegistrationPage = (props) => {
                                         name="lastName"
                                         type="input"
                                     />
-                                    <ErrorMessage name="lastName"/>
+                                    <ErrorMessage  name="lastName"/>
                                 </div>
                                 <div>
                                     <div><label>E-mail </label></div>
