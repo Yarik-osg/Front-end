@@ -1,26 +1,19 @@
 import React, {Component} from "react";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
-import auth from "./Auth";
+//import auth from "./auth";
+import {checkAuth} from './checkAuth'
 
-export const ProtectedRoute = ({component: Component, ...rest}) => {
+export const PrivateRoute = ({ component: Component, path, ...rest }) => {
+
     return (
         <Route
+            path={path}
             {...rest}
-            render={
-                (props) => {
-                    if (auth.isAuthenticated()) {
-                        return <Component {...props} />
-                    }
-                    else {
-                        return <Redirect to={
-                            {
-                                pathname: "/login",
-                                state: {
-                                    from: props.location
-                                }}
-                        }/>
-                    }
-                }}
+            render={props =>
+                checkAuth.authorise()
+                    ? <Component {...props} />
+                    : <Redirect to={{ pathname: "/login" }} />
+            }
         />
-    )
+    );
 }

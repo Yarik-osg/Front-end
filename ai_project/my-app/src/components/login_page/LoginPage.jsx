@@ -8,7 +8,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../music.svg"
 import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
-import Auth from "../../Auth";
+import axios from "axios";
+import checkAuth from "../../checkAuth";
 
 const eye = <FontAwesomeIcon icon={faEye}/>;
 
@@ -22,7 +23,6 @@ const validationSchema = Yup.object().shape({
 
 
 const LoginPage = (props) => {
-
     const togglePasswordVisibility = () => {
         setPasswordShown(!passwordShown);
     };
@@ -30,6 +30,7 @@ const LoginPage = (props) => {
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
+    const [error, setError] = useState(" ");
     const [passwordShown, setPasswordShown] = useState(false);
     return (
         <div className={classes.loginPage}>
@@ -42,18 +43,51 @@ const LoginPage = (props) => {
                     initialValues={{email: '', password: ''}}
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
-                        console.log(values)
+                        console.log(values);
+                        axios
+                            .post('http://localhost:8080/login',
+                                {
+                                    username: values["email"],
+                                    password: values["password"]
+                                }
+                            ).then(res => {
+                            localStorage.setItem('token', res.data.token)
+                            console.log(res)
+                            checkAuth.authorise();
+                            props.history.push("/users");
+                        })
+                            .catch(err => {
+                                console.log(err)
+                                if (err.response) {
+                                    console.log(err.response.status);
+                                    //setError(err.response.status)
+                                    if (err.response.status === 409)
+                                        setError("User already exist. Change email.")
+                                    // const error= localStorage.getItem("error")
+                                    // console.log(error);
+
+                                }
+                            })
+                        console.log(localStorage.getItem('token'))
+
+
                     }}>
                     {({errors, touched}) => (
-                        <Form>
+                        <Form
+                            //    onSubmit={this.handleSubmit}
+                        >
+                            <div>
+                                {error}
+                            </div>
                             <div className={classes.inputBlock}>
                                 <div className={classes.passwordWr}>
                                     <div><label>E-mail </label></div>
                                     <Field
-                                        classname={classes.field}
+                                        //className={classes.field}
                                         placeholder="email@smth.com"
                                         name="email"
                                         type="email"
+
                                     />
                                     <div className={classes.error}>
                                         <ErrorMessage name="email"/>
@@ -85,21 +119,16 @@ const LoginPage = (props) => {
                                         onClick={() => handleMenuClick("/register")}>Create!
                                 </button>
                                 <button className={classes.btn}
-                                        onClick={
-                                            () => {
-                                                Auth.login(() => {
-                                                    props.history.push("/Users");
-                                                })
-                                            }
-                                        }
-                                        type="submit">Login!</button>
+
+                                        type="submit">Login!
+                                </button>
                             </div>
                             <hr/>
                             <div>
                                 {/*<button className={classes.btn} type="submit">Gmail</button>*/}
                                 {/*<button className={classes.btn} type="submit">Facebook</button>*/}
-                                <FacebookLoginButton className={classes.btn} type="submit" />
-                                <GoogleLoginButton onClick={() => alert("Hello")} />
+                                <FacebookLoginButton className={classes.btn} type="submit"/>
+                                <GoogleLoginButton onClick={() => alert("Hello")}/>
                             </div>
                         </Form>
                     )}
