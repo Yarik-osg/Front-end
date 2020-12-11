@@ -5,6 +5,7 @@ import {getJwt} from "./helpers/jwt";
 import axios from 'axios'
 import { withRouter } from 'react-router-dom';
 import checkAuth from "./checkAuth";
+const check=false
 
 
 
@@ -13,7 +14,7 @@ export const Users = (props) =>{
         <div>
             Users
             <button onClick={()=>{
-                checkAuth.logout()
+                localStorage.setItem("check",JSON.stringify(check))
                 props.history.push("/login")
             }}
                 >

@@ -50,7 +50,12 @@ const RegistrationPage = (props) => {
                             // setError(res.status)
                             const status1=res.status
                             console.log(status1)
-                            checkAuth.authorise();
+                            // localStorage.setItem('token', res.data.token)
+                            console.log(res)
+                            checkAuth.isAuthorised=true;
+                            const Check = checkAuth.isAuthorised
+                            localStorage.setItem("check",JSON.stringify(Check) )
+                            console.log(localStorage.getItem("check"))
                             props.history.push("/users");
                             })
                             .catch(err => {
