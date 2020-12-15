@@ -47,22 +47,25 @@ const LoginPage = (props) => {
                         axios
                             .post('http://localhost:8080/login',
                                 {
-                                    username: values["email"],
+                                    email: values["email"],
                                     password: values["password"]
                                 }
                             ).then(res => {
                             localStorage.setItem('token', res.data.token)
                             console.log(res)
-                            checkAuth.authorise();
-                            props.history.push("/users");
+                            checkAuth.isAuthorised=true;
+                            const Check = checkAuth.isAuthorised
+                            localStorage.setItem("check",JSON.stringify(Check) )
+                            console.log(localStorage.getItem("check"))
+                            props.history.push("/main");
                         })
                             .catch(err => {
                                 console.log(err)
                                 if (err.response) {
                                     console.log(err.response.status);
                                     //setError(err.response.status)
-                                    if (err.response.status === 409)
-                                        setError("User already exist. Change email.")
+                                    if (err.response.status === 405)
+                                        setError("Wrong password or email")
                                     // const error= localStorage.getItem("error")
                                     // console.log(error);
 
