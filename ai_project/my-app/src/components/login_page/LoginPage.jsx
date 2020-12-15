@@ -57,7 +57,7 @@ const LoginPage = (props) => {
                             const Check = checkAuth.isAuthorised
                             localStorage.setItem("check",JSON.stringify(Check) )
                             console.log(localStorage.getItem("check"))
-                            props.history.push("/users");
+                            props.history.push("/main");
                         })
                             .catch(err => {
                                 console.log(err)

@@ -1,7 +1,7 @@
 import React from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
-//import classes from "../login_page/Login_index.module.css";
+//import classes from "../login_page/Createpost.module.css";
 
 
 const validationSchema = Yup.object().shape({

@@ -15,7 +15,8 @@ export const Users = (props) =>{
             Users
             <button onClick={()=>{
                 localStorage.setItem("check",JSON.stringify(check))
-                props.history.push("/login")
+                props.history.push("/main")
+
             }}
                 >
                 Logout

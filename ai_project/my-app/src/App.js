@@ -11,6 +11,8 @@ import {Users} from "./Users"
 import {PrivateRoute} from "./PrivateRoute";
 import {Link} from "react-router-dom";
 import {checkAuth} from "./checkAuth";
+import CreatePost from "./components/Post/CreatePost";
+
 
 const App = () => {
 
@@ -18,13 +20,14 @@ const App = () => {
     <div className="App">
         <Router>
             <Switch>
-
                 <Route path ="/login" component={LoginPage} />
                 <Route path ="/register" component={RegistrationPage} />
                 <Route path ="/resetpassword1" component={ResetPasswordPage1} />
                 <Route path ="/resetpassword2" component={ResetPasswordPage2} />
+
                 <Route path = "/main" component= {MainPage} />
                 <PrivateRoute exact path="/users" component={Users}/>
+                <PrivateRoute exact path="/createpost" component={CreatePost}/>
                 <Route path="*" component={()=>"404 Not found"}/>
             </Switch>
         </Router>
