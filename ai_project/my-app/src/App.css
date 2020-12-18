@@ -2,10 +2,7 @@
   text-align: center;
   color: black;
 }
-.App h1 {
-  color: black;
-  font-family: "Trebuchet MS";
-}
+
 .App h4 {
   color: black;
   font-family: "Trebuchet MS";
@@ -45,9 +42,7 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
+
 
 @keyframes App-logo-spin {
   from {
