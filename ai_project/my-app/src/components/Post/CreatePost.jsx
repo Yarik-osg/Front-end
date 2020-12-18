@@ -12,6 +12,8 @@ import axios from "axios";
 import checkAuth from "../../checkAuth";
 import {Multiselect} from 'multiselect-react-dropdown';
 import PlacesAutocomplete from "react-places-autocomplete";
+import ImageUploader from "react-images-upload";
+
 const eye = <FontAwesomeIcon icon={faEye}/>;
 
 const validationSchema = Yup.object().shape({
@@ -36,6 +38,10 @@ const CreatePost = (props) => {
     const {history} = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
+    };
+    const [pictures, setPictures] = useState([]);
+    const onDrop = picture => {
+        setPictures([...pictures, picture]);
     };
     const [error, setError] = useState(" ");
     const genre = {
@@ -167,11 +173,11 @@ const CreatePost = (props) => {
                                                         {loading && <div>Loading...</div>}
                                                         {suggestions.map((suggestion) => {
                                                             const style = suggestion.active
-                                                                ? { backgroundColor: "#a83232", cursor: "pointer" }
-                                                                : { backgroundColor: "#ffffff", cursor: "pointer" }
+                                                                ? {backgroundColor: "#a83232", cursor: "pointer"}
+                                                                : {backgroundColor: "#ffffff", cursor: "pointer"}
 
                                                             return (
-                                                                <div {...getSuggestionItemProps(suggestion, { style })}>
+                                                                <div {...getSuggestionItemProps(suggestion, {style})}>
                                                                     {suggestion.description}
                                                                 </div>
                                                             )
@@ -182,40 +188,28 @@ const CreatePost = (props) => {
                                         </PlacesAutocomplete>
                                     </div>
 
-
-
                                 </div>
                                 <div>
                                     <div><label>video/photo </label></div>
-                                    <Field
-                                        placeholder="video"
-                                        name="video"
-                                        type="text"
+                                    <ImageUploader
+                                        {...props}
+                                        withIcon={true}
+                                        onChange={onDrop}
+                                        imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                                        maxFileSize={5242880}
+                                        withPreview={true}
                                     />
-
-                                    <div>
-                                        <ErrorMessage name="video"/>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div><label>video/photo </label></div>
-                                    <Field
-                                        placeholder="video"
-                                        name="video"
-                                        type="text"
-                                    />
-
-                                    <div>
-                                        <ErrorMessage name="video"/>
-                                    </div>
-
                                 </div>
                                 <div>
                                     <div><label>description </label></div>
-                                    <textarea>
+                                    <Field
+                                        //className={classes.field}
+                                        placeholder="description"
+                                        name="description"
+                                        type="text"
 
-                               </textarea>
+                                    />
+
 
                                 </div>
                             </div>
