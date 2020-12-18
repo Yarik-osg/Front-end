@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
-import classes from "../login_page/Login_index.module.css";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import classes from '../login_page/Login_index.module.css'
+import logo from '../../music.svg'
+
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 const validationSchema = Yup.object().shape({
@@ -29,7 +31,7 @@ const ResetPasswordPage2 = () =>{
     return (
         <div>
             <header className={classes.header}>
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt=""/>
+                <img src={logo} alt=""/>
                 <h1>Enter new password</h1>
             </header>
 
@@ -64,11 +66,10 @@ const ResetPasswordPage2 = () =>{
                                 />
                                 <ErrorMessage name="confirmPassword"/>
                             </div>
-                            <h4>visibility</h4>
                             <i onClick={togglePasswordVisibility}>{eye}</i>
                         </div>
                         <div>
-                            <button type="submit">
+                            <button className={classes.btn} type="submit">
                                 Submit!
                             </button>
                         </div>

@@ -10,7 +10,7 @@ const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
     }
     return(
         <nav>
-            <ul className="pagination">
+            <ul className="flex-lg-wrap pagination">
                 {pageNumbers.map(number => (
                     <li key = {number} className="page-item">
                         <button onClick={() => paginate(number)} className= "page-link">

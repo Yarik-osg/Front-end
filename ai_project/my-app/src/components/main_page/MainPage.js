@@ -1,11 +1,15 @@
 import React, {Component}  from "react";
 import axios from "axios"
 import ListOfPosts from "./ListOfPosts"
-
+import Navbar from "../navbar/Navbar";
 const MainPage = () => {
 
     return(
-        <ListOfPosts />
+        <div>
+            <Navbar />
+            <ListOfPosts />
+        </div>
+
 
     )
 
