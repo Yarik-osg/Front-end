@@ -54,7 +54,8 @@ body {
     animation: move 10s ease infinite;
     transform: translate3d(0, 0, 0);
     background: linear-gradient(45deg, wheat 10%, #A2C7E5 90%);
-    height: 100vh
+    height: 100vh;
+    background-attachment: fixed;
 }
 
 

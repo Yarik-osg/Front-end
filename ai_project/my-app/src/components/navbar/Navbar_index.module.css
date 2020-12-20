@@ -1,3 +1,7 @@
+.container{
+
+}
+
 .NavbarItems {
 
     background: linear-gradient(90deg, lightblue, mediumslateblue);
@@ -8,8 +12,9 @@
     flex-grow: 1;
     justify-content: space-around;
     align-items: center;
-
-
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
 }
 
@@ -38,7 +43,7 @@
     justify-self: center;
     color: #282c34;
     position: relative;
-    margin-left: 450px;
+    margin-left: 475px;
 
 }
 

@@ -2,13 +2,13 @@ import React, {useState, useEffect}  from "react";
 import axios from "axios"
 import Posts from "./Posts";
 import Pagination from "./Pagination";
-
+import classes from './ListOfPosts_index.module.css'
 
 const ListOfPosts = () => {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(10)
+    const [postsPerPage, setPostsPerPage] = useState(6)
     const [totalElements, setTotalElements] = useState(10)
     useEffect( () => {
 
@@ -37,8 +37,8 @@ const ListOfPosts = () => {
     }
 
     return(
-        <div>
-            <h1>Testing Pagination</h1>
+        <div className={classes.ListOfPosts}>
+
             <div className="container mt-5">
                 <Posts posts={posts} loading={loading} />
                 <Pagination postsPerPage={postsPerPage} totalPosts={totalElements} paginate={paginate} perPage = {perPage}/>
