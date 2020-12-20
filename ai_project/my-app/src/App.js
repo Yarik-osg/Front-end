@@ -14,12 +14,15 @@ import {checkAuth} from "./checkAuth";
 import CreatePost from "./components/Post/CreatePost";
 
 
+
+
 const App = () => {
 
   return (
     <div className="App">
         <Router>
             <Switch>
+
                 <Route path ="/login" component={LoginPage} />
                 <Route path ="/register" component={RegistrationPage} />
                 <Route path ="/resetpassword1" component={ResetPasswordPage1} />
