@@ -12,13 +12,9 @@ import Navbar from "../navbar/Navbar";
 import jwtDecode from "jwt-decode";
 
 const validationSchema = Yup.object().shape({
-    name_of_post: Yup.string()
+    postHeader: Yup.string()
         .required('Required'),
-    // genre: Yup.string()
-    //     .required('Required'),
-    // PlacesAutocomplete: Yup.string()
-    //      .required('Required'),
-    description: Yup.string()
+    description:Yup.string()
         .required('Required')
 });
 
@@ -65,7 +61,7 @@ const CreatePost = (props) => {
                     <h2>Create post</h2>
                 </header>
                 <Formik
-                    initialValues={{name_of_post: '', description: '', address: '',photo: null,email:decoded.sub}}
+                    initialValues={{postHeader: '', description: '', address: '',photo: null,email:decoded.sub}}
                     validationSchema={validationSchema}
 
                     onSubmit={(values) => {
@@ -76,9 +72,9 @@ const CreatePost = (props) => {
                             .post('http://localhost:8080/postAdd',
                                 {
                                     body:{
-                                        name_of_post: values["name_of_post"],
+                                        postHeader: values["postHeader"],
                                         description: values["description"],
-                                        address: values["address"]
+                                        location: values["address"]
                                     },
                                     photo: values["photo"],
                                     email:decoded.sub,
@@ -104,12 +100,12 @@ const CreatePost = (props) => {
                                     <div><label>Name of post </label></div>
                                     <Field
                                         placeholder="text"
-                                        name="name_of_post"
+                                        name="postHeader"
                                         type="text"
 
                                     />
                                     <div>
-                                        <ErrorMessage name="name_of_post"/>
+                                        <ErrorMessage name="postHeader"/>
                                     </div>
                                 </div>
 
