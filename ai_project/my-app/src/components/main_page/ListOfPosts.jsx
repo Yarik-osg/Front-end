@@ -3,8 +3,12 @@ import axios from "axios"
 import Posts from "./Posts";
 import Pagination from "./Pagination";
 import classes from './ListOfPosts_index.module.css'
-
-const ListOfPosts = () => {
+import {withRouter} from 'react-router-dom'
+const ListOfPosts = (props) => {
+    const handleMenuClick = (pageURL) => {
+        history.push(pageURL);
+    };
+    const {history} = props;
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
@@ -43,11 +47,13 @@ const ListOfPosts = () => {
                 <Posts posts={posts} loading={loading} />
                 <Pagination postsPerPage={postsPerPage} totalPosts={totalElements} paginate={paginate} perPage = {perPage}/>
             </div>
-
+            <div>
+                <button onClick={() => handleMenuClick("/createpost")} >Create post</button>
+            </div>
         </div>
 
     )
 
 }
 
-export default ListOfPosts
+export default withRouter(ListOfPosts)

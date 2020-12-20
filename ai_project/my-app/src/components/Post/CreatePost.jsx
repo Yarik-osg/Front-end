@@ -9,7 +9,7 @@ import axios from "axios";
 import {Multiselect} from 'multiselect-react-dropdown';
 import LocationApi from "./Location";
 import Navbar from "../navbar/Navbar";
-
+import jwtDecode from "jwt-decode";
 
 const validationSchema = Yup.object().shape({
     name_of_post: Yup.string()
@@ -35,7 +35,7 @@ const CreatePost = (props) => {
 
         const objectUrl = URL.createObjectURL(selectedFile)
         setPreview(objectUrl)
-        
+
         return () => URL.revokeObjectURL(objectUrl)
     }, [selectedFile])
 
@@ -43,6 +43,10 @@ const CreatePost = (props) => {
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
+    const token = localStorage.getItem('token');
+    const decoded = jwtDecode(token);
+    console.log(decoded);
+
 
     const [error, setError] = useState(" ");
     const genre = {
@@ -61,7 +65,7 @@ const CreatePost = (props) => {
                     <h2>Create post</h2>
                 </header>
                 <Formik
-                    initialValues={{name_of_post: '', description: '', address: '', photo: null}}
+                    initialValues={{name_of_post: '', description: '', address: '',photo: null,email:decoded.sub}}
                     validationSchema={validationSchema}
 
                     onSubmit={(values) => {
@@ -69,12 +73,16 @@ const CreatePost = (props) => {
                         let data = new FormData
                         data.append('photo',values.photo)
                         axios
-                            .post('http://localhost:8080/post',
+                            .post('http://localhost:8080/postAdd',
                                 {
-                                    name_of_post: values["name_of_post"],
-                                    description: values["description"],
-                                    address: values["address"],
-                                    photo: values["photo"]
+                                    body:{
+                                        name_of_post: values["name_of_post"],
+                                        description: values["description"],
+                                        address: values["address"]
+                                    },
+                                    photo: values["photo"],
+                                    email:decoded.sub,
+                                    //token:token
                                 }
                             ).then(res => {
                             console.log(res)
@@ -166,7 +174,9 @@ const CreatePost = (props) => {
                             </div>
 
                             <div>
-                                <button type="submit">Add post!</button>
+                                <button type="submit"
+                                        //onClick={() => handleMenuClick("/main")}
+                                >Add post!</button>
                             </div>
                         </Form>
                     )}

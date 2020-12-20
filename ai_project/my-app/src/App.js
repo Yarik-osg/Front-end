@@ -24,7 +24,6 @@ const App = () => {
     <div className="App">
         <Router>
             <Switch>
-
                 <Route path ="/login" component={LoginPage} />
                 <Route path ="/register" component={RegistrationPage} />
                 <Route path ="/resetpassword1" component={ResetPasswordPage1} />
