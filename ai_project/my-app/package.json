@@ -13,17 +13,13 @@
     "@testing-library/user-event": "^12.2.0",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
-    "classnames": "^2.2.6",
-    "dropzone": "^5.7.2",
     "formik": "^2.2.5",
     "multiselect-react-dropdown": "^1.6.2",
     "react": "^17.0.1",
     "react-async-script-loader": "^0.3.0",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
-    "react-flip-move": "^2.1.2",
     "react-hook-form": "^6.11.5",
-    "react-images-upload": "^1.2.8",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
@@ -57,7 +53,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "react-dropzone": "^11.2.4",
+    "clsx": "^1.1.1",
     "react-redux": "^7.2.2"
   }
 }
