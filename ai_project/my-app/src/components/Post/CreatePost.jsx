@@ -1,7 +1,5 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {Formik, Field, ErrorMessage, Form, useField, FieldAttributes, FieldArray} from "formik";
-
-import {TextField, Button, Checkbox, Radio, FormControlLabel, Select, MenuItem} from "@material-ui/core";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Createpost.module.css"
@@ -10,7 +8,7 @@ import logo from "../../music.svg"
 import axios from "axios";
 import {Multiselect} from 'multiselect-react-dropdown';
 import LocationApi from "./Location";
-
+import Navbar from "../navbar/Navbar";
 
 
 const validationSchema = Yup.object().shape({
@@ -25,9 +23,21 @@ const validationSchema = Yup.object().shape({
 });
 
 const CreatePost = (props) => {
+    const [selectedFile, setSelectedFile] = useState()
+    const [preview, setPreview] = useState()
 
+    // create a preview as a side effect, whenever selected file is changed
+    useEffect(() => {
+        if (!selectedFile) {
+            setPreview(undefined)
+            return
+        }
 
-
+        const objectUrl = URL.createObjectURL(selectedFile)
+        setPreview(objectUrl)
+        
+        return () => URL.revokeObjectURL(objectUrl)
+    }, [selectedFile])
 
     const {history} = props;
     const handleMenuClick = (pageURL) => {
@@ -41,10 +51,10 @@ const CreatePost = (props) => {
             id: 4
         }, {name: 'Hip-hop', id: 5}]
     }
-
     return (
 
         <div>
+            <Navbar/>
             <div>
                 <header>
                     <img src={logo} alt=""/>
@@ -64,21 +74,13 @@ const CreatePost = (props) => {
                                     name_of_post: values["name_of_post"],
                                     description: values["description"],
                                     address: values["address"],
-                                    photo: values["data"]
+                                    photo: values["photo"]
                                 }
                             ).then(res => {
                             console.log(res)
                         })
                             .catch(err => {
                                 console.log(err)
-                                if (err.response) {
-                                    console.log(err.response.status);
-
-                                    if (err.response.status === 405)
-                                        setError("Wrong password or email")
-
-
-                                }
                             })
                         console.log(values);
                     }}>
@@ -148,7 +150,10 @@ const CreatePost = (props) => {
                                 <Field name="address" component={LocationApi}/>
                                 <div>
                                     <div><label>video/photo </label></div>
-                                    <input type="file" name="photo" onChange={(event)=>formProps.setFieldValue('photo',event.target.files[0])}/>
+                                    <input type="file" name="photo" onChange={  (event)=>{ formProps.setFieldValue('photo',event.target.files[0]) } }/>
+                                    {setSelectedFile(formProps.values["photo"])}
+                                      <img src={preview}  />
+
                                 </div>
                                 <div>
                                     <div><label>description </label></div>

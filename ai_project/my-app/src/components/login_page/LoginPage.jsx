@@ -47,7 +47,7 @@ const LoginPage = (props) => {
                         axios
                             .post('http://localhost:8080/login',
                                 {
-                                    username: values["email"],
+                                    email: values["email"],
                                     password: values["password"]
                                 }
                             ).then(res => {
