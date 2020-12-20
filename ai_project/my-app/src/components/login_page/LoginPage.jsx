@@ -47,7 +47,7 @@ const LoginPage = (props) => {
                         axios
                             .post('http://localhost:8080/login',
                                 {
-                                    email: values["email"],
+                                    username: values["email"],
                                     password: values["password"]
                                 }
                             ).then(res => {
@@ -118,20 +118,21 @@ const LoginPage = (props) => {
                             </div>
 
                             <div className={classes.buttons}>
-                                <button className={classes.btn} type="submit"
-                                        onClick={() => handleMenuClick("/register")}>Create!
-                                </button>
                                 <button className={classes.btn}
 
                                         type="submit">Login!
                                 </button>
+                                <button className={classes.btn} type="submit"
+                                        onClick={() => handleMenuClick("/register")}>Create!
+                                </button>
+
                             </div>
                             <hr/>
                             <div>
                                 {/*<button className={classes.btn} type="submit">Gmail</button>*/}
                                 {/*<button className={classes.btn} type="submit">Facebook</button>*/}
-                                <FacebookLoginButton className={classes.btn} type="submit"/>
-                                <GoogleLoginButton onClick={() => alert("Hello")}/>
+                                {/*<FacebookLoginButton className={classes.btn} type="submit"/>*/}
+                                {/*<GoogleLoginButton onClick={() => alert("Hello")}/>*/}
                             </div>
                         </Form>
                     )}
