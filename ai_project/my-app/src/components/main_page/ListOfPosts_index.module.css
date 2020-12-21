@@ -3,3 +3,25 @@
     padding-left: 200px;
 }
 
+.btn {
+    color: #252537;
+
+    width: 200px;
+    height: 100px;
+    background: #fff;
+    border-radius: 5px;
+
+    outline: none;
+    border: none;
+
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s linear;
+
+    margin-top: 2%;
+
+    letter-spacing: 0.05em;
+    position: relative;
+
+
+}

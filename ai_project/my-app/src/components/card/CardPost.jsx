@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -14,6 +14,7 @@ import { red } from '@material-ui/core/colors';
 import {CardActionArea} from "@material-ui/core";
 import logo from '../../music.svg'
 import {withRouter} from "react-router-dom"
+import axios from 'axios'
 // import FavoriteIcon from '@material-ui/icons/Favorite';
 // import ShareIcon from '@material-ui/icons/Share';
 //import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -21,8 +22,8 @@ import {withRouter} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 300,
-        minWidth:100,
+        width: 300,
+        height:450,
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(127, 209, 225, .5)',
@@ -50,16 +51,46 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: "1%",
         paddingRight: "1%",
         wordWrap: "break-word"
+    },
+    description:{
+        wordWrap: "break-word",
     }
 }));
 
 const CardPost = (props) => {
     const classes = useStyles();
-
     const {history} = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
+    //console.log(props.description)
+        //const [description,setDescription]=useState('')
+    const [userName,setUserName]=useState()
+   // const temp = props.description
+    //setDescription(temp)
+    //console.log(description)
+    //console.log(props.description)
+    //setDescription(props.description)
+   // if(description.length   >130)
+   // {
+   //     setDescription( props.description.slice(0,124)+ "...")
+   // }
+    let desc
+    async function getUser(){
+        const res = await  axios
+            .get(`http://localhost:8080/user/${props.id_user}`)
+        return res
+    }
+
+        getUser()
+        .then(res=>{
+            console.log(res.data)
+            setUserName(res.data.firstName + " " + res.data.lastName)
+            desc = res.data.firstName
+            }
+        )
+        .catch(err=>{console.log(err)})
+    console.log(desc)
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -69,29 +100,28 @@ const CardPost = (props) => {
                     </Avatar>
                 }
 
-                title= {props.title}
+                title= {userName}
                 subheader="20 грудня, 2020"
 
             />
             <CardActionArea onClick={() => handleMenuClick(`post/${props.id}`)}>
                 <Typography className={classes.postName}  variant="body1" color="textPrimary" component="h4">
-                    Я СУПЕР МУЗИКАНТ ШУКАЮ ГУРТ!
+                    {props.title}
                 </Typography>
                 <CardMedia
                     className={classes.media}
                     image={logo}
 
                 />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Я, супер-гітарист-басист-піаніст-вокаліст-скрипач-композитор, шукаю гурт
-                        світового класу, а то й щось покраще, гонорари від декількох мільйонів.
+                <CardContent >
+                    <Typography className={classes.description} variant="body2" color="textSecondary" component="p">
+                        {props.description}
 
                     </Typography>
                 </CardContent>
             </CardActionArea>
             <Typography className={classes.location} component="p">
-                Львів
+                {props.address}
             </Typography>
 
         </Card>

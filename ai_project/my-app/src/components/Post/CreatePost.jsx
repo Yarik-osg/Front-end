@@ -61,7 +61,8 @@ const CreatePost = (props) => {
                     <h2>Create post</h2>
                 </header>
                 <Formik
-                    initialValues={{postHeader: '', description: '', address: '',photo: null,email:decoded.sub}}
+                    initialValues={{postHeader: '', description: '', address: '',photo: null,email:decoded.sub
+                    }}
                     validationSchema={validationSchema}
 
                     onSubmit={(values) => {
@@ -69,15 +70,13 @@ const CreatePost = (props) => {
                         let data = new FormData
                         data.append('photo',values.photo)
                         axios
-                            .post('http://localhost:8080/postAdd',
+                            .post(`http://localhost:8080/postAdd?email=${decoded.sub}`,
                                 {
-                                    body:{
                                         postHeader: values["postHeader"],
                                         description: values["description"],
-                                        location: values["address"]
-                                    },
-                                    photo: values["photo"],
-                                    email:decoded.sub,
+                                        location: values["address"].value,
+                                       // file: values["photo"],
+                                    //email:decoded.sub,
                                     //token:token
                                 }
                             ).then(res => {
@@ -87,6 +86,7 @@ const CreatePost = (props) => {
                                 console.log(err)
                             })
                         console.log(values);
+                        handleMenuClick("/main")
                     }}>
 
                     {(formProps) => (
@@ -170,8 +170,8 @@ const CreatePost = (props) => {
                             </div>
 
                             <div>
-                                <button type="submit"
-                                        //onClick={() => handleMenuClick("/main")}
+                                <button className={classes.btn} type="submit"
+
                                 >Add post!</button>
                             </div>
                         </Form>

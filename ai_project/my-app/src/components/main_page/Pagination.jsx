@@ -1,5 +1,5 @@
 import React from "react";
-
+import classes from './Pagination_index.module.css'
 
 const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
     const pageNumbers = [];
@@ -10,31 +10,33 @@ const Pagination = ({postsPerPage, totalPosts, paginate, perPage}) => {
     }
     return(
         <nav>
-            <ul className="flex-lg-wrap pagination mt-3">
-                {pageNumbers.map(number => (
-                    <li key = {number} className="page-item">
-                        <button onClick={() => paginate(number)} className= "page-link">
-                            {number}
-                        </button>
-                    </li>
-                ))}
-
-                {/* {values.map((size) => (
-                        <li key={size} value={size} className="page-item ">
-                            <button onClick={() => perPage(size)} className= "page-link">
-                                {size}
+            <ul className="pagination">
+                <li>
+                    <ul className="flex-lg-wrap pagination mt-3">
+                    {pageNumbers.map(number => (
+                        <li key = {number} className="page-item">
+                            <button onClick={() => paginate(number)} className= "page-link">
+                                {number}
                             </button>
                         </li>
-                    ))}*/}
-
+                    ))}
+                </ul>
+                </li>
+                <li>
+                    <select className={classes.btn}  defaultValue="6" onChange={event => perPage(event.currentTarget.value)}>
+                    {values.map((size) => (
+                        <option key={size} value={size}>
+                            {size}
+                        </option>
+                    ))}
+                </select>
+                </li>
             </ul>
-            <select className="page-link" defaultValue="6" onChange={event => perPage(event.currentTarget.value)}>
-                {values.map((size) => (
-                    <option key={size} value={size}>
-                        {size}
-                    </option>
-                ))}
-            </select>
+
+
+
+
+
         </nav>
     )
 }

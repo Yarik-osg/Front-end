@@ -17,7 +17,13 @@ const Posts = ({posts, loading}) =>{
         <Grid container spacing={4}>
                 {posts.map(post => (
             <Grid item >
-                <CardPost id = {post.id} title = {post.email} />
+                <CardPost id = {post.id}
+                          //username = {post.postHeader}
+                    title = {post.postHeader}
+                          description = {post.description}
+                          address={post.location}
+                          id_user={post.user_id}
+                />
             </Grid>
                     ))}
         </Grid>

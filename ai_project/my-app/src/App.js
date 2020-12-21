@@ -26,8 +26,8 @@ const App = () => {
             <Switch>
                 <Route path ="/login" component={LoginPage} />
                 <Route path ="/register" component={RegistrationPage} />
-                <Route path ="/resetpassword1" component={ResetPasswordPage1} />
-                <Route path ="/resetpassword2" component={ResetPasswordPage2} />
+                <Route path ="/forgot_password" component={ResetPasswordPage1} />
+                <Route path ="/reset_password" component={ResetPasswordPage2} />
                 <PrivateRoute path = "/user" component={UserPage} />
                 <PrivateRoute path = "/useredit" component={UserEditPage} />
                 <Route path = "/main" component= {MainPage} />
