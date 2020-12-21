@@ -88,7 +88,7 @@ const ResetPasswordPage2 = (props) => {
                             <i onClick={togglePasswordVisibility}>{eye}</i>
                         </div>
                         <div>
-                            <button type="submit" onClick={() => handleMenuClick("/main")}>
+                            <button className={classes.btn} type="submit" onClick={() => handleMenuClick("/main")}>
                                 Submit!
                             </button>
                         </div>

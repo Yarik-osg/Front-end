@@ -2,7 +2,7 @@ import React from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
 import axios from "axios";
-//import classes from "../login_page/Login_index.module.css";
+import classes from "../login_page/Login_index.module.css";
 
 
 const validationSchema = Yup.object().shape({
@@ -53,7 +53,7 @@ const ResetPasswordPage1 = (props) =>{
 
                         </div>
                         <div>
-                            <button type="submit">
+                            <button  className={classes.btn} type="submit">
                                 Submit!
                             </button>
                         </div>

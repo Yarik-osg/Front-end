@@ -114,7 +114,7 @@ const LoginPage = (props) => {
                                 </div>
                             </div>
                             <div className={classes.linkPass}>
-                                <Link to="/resetpassword1">Forgot Password?</Link>
+                                <Link to="/forgot_password">Forgot Password?</Link>
                             </div>
 
                             <div className={classes.buttons}>
