@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import *as Yup from 'yup'
 import {Formik, Form, ErrorMessage, Field} from "formik";
 import axios from "axios";
@@ -13,6 +13,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ResetPasswordPage1 = (props) =>{
+    const [error, setError] = useState(" ");
     return (
         <div>
             <header
@@ -31,16 +32,24 @@ const ResetPasswordPage1 = (props) =>{
                             {
                                 email: values["email"],
                             }
-                        ).then(res => console.log(res))
-                        .catch(err => console.log(err))
-
+                        ).then(res => {
+                            console.log(res)
+                           setError("Check your email")
+                        console.log(error)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            setError("Wrong email")
+                        })
+                    console.log(error)
                 }}
                 validationSchema = {validationSchema}>
                 {({errors, touched}) => (
                     <Form >
                         <div>
-
-
+                            <h2>
+                                {error}
+                            </h2>
                             <div>
                                 <div    ><label>E-mail </label></div>
                                 <Field
