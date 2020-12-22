@@ -52,11 +52,11 @@ const RegistrationPage = (props) => {
                             console.log(status1)
                             // localStorage.setItem('token', res.data.token)
                             console.log(res)
-                            checkAuth.isAuthorised=true;
-                            const Check = checkAuth.isAuthorised
-                            localStorage.setItem("check",JSON.stringify(Check) )
-                            console.log(localStorage.getItem("check"))
-                            props.history.push("/users");
+                            // checkAuth.isAuthorised=true;
+                            // const Check = checkAuth.isAuthorised
+                            // localStorage.setItem("check",JSON.stringify(Check) )
+                            // console.log(localStorage.getItem("check"))
+                            props.history.push("/login");
                             })
                             .catch(err => {
                                 if (err.response) {

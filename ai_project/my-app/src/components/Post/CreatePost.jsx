@@ -1,42 +1,49 @@
-import React, {useState} from 'react'
-import {Formik, Field, ErrorMessage, Form,} from "formik";
+import React, {Fragment, useEffect, useState} from 'react'
+import {Formik, Field, ErrorMessage, Form, useField, FieldAttributes, FieldArray} from "formik";
 import *as Yup from "yup"
 import {Link} from "react-router-dom";
 import classes from "./Createpost.module.css"
 import {withRouter} from 'react-router-dom'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye} from "@fortawesome/free-solid-svg-icons";
 import logo from "../../music.svg"
-import {FacebookLoginButton, GoogleLoginButton} from "react-social-login-buttons";
 import axios from "axios";
-import checkAuth from "../../checkAuth";
 import {Multiselect} from 'multiselect-react-dropdown';
-import PlacesAutocomplete from "react-places-autocomplete";
-const eye = <FontAwesomeIcon icon={faEye}/>;
+import LocationApi from "./Location";
+import Navbar from "../navbar/Navbar";
+import jwtDecode from "jwt-decode";
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string()
-        .email('Invalid email')
+    postHeader: Yup.string()
         .required('Required'),
-    password: Yup.string()
+    description:Yup.string()
         .required('Required')
 });
 
-
 const CreatePost = (props) => {
-    const [address, setAddress] = React.useState("");
+    const [selectedFile, setSelectedFile] = useState()
+    const [preview, setPreview] = useState()
 
-    const handleChangeAddress = (value) => {
-        setAddress(value)
-    }
+    // create a preview as a side effect, whenever selected file is changed
+    useEffect(() => {
+        if (!selectedFile) {
+            setPreview(undefined)
+            return
+        }
 
-    const handleSelectAddress = (value) => {
-        setAddress(value)
-    }
+        const objectUrl = URL.createObjectURL(selectedFile)
+        setPreview(objectUrl)
+
+        return () => URL.revokeObjectURL(objectUrl)
+    }, [selectedFile])
+
     const {history} = props;
     const handleMenuClick = (pageURL) => {
         history.push(pageURL);
     };
+    const token = localStorage.getItem('token');
+    const decoded = jwtDecode(token);
+    console.log(decoded);
+
+
     const [error, setError] = useState(" ");
     const genre = {
         options: [{name: 'Phonk', id: 1}, {name: 'Rock', id: 2}, {name: 'Classical', id: 3}, {
@@ -45,51 +52,45 @@ const CreatePost = (props) => {
         }, {name: 'Hip-hop', id: 5}]
     }
     return (
+
         <div>
+            <Navbar/>
             <div>
                 <header>
                     <img src={logo} alt=""/>
                     <h2>Create post</h2>
                 </header>
                 <Formik
-                    initialValues={{email: '', password: ''}}
+                    initialValues={{postHeader: '', description: '', address: '',photo: null,email:decoded.sub
+                    }}
                     validationSchema={validationSchema}
+
                     onSubmit={(values) => {
                         console.log(values);
+                        let data = new FormData
+                        data.append('photo',values.photo)
                         axios
-                            .post('http://localhost:8080/login',
+                            .post(`http://localhost:8080/postAdd?email=${decoded.sub}`,
                                 {
-                                    email: values["email"],
-                                    password: values["password"]
+                                        postHeader: values["postHeader"],
+                                        description: values["description"],
+                                        location: values["address"].value,
+                                       // file: values["photo"],
+                                    //email:decoded.sub,
+                                    //token:token
                                 }
                             ).then(res => {
-                            localStorage.setItem('token', res.data.token)
                             console.log(res)
-                            checkAuth.isAuthorised = true;
-                            const Check = checkAuth.isAuthorised
-                            localStorage.setItem("check", JSON.stringify(Check))
-                            console.log(localStorage.getItem("check"))
-                            props.history.push("/users");
                         })
                             .catch(err => {
                                 console.log(err)
-                                if (err.response) {
-                                    console.log(err.response.status);
-                                    //setError(err.response.status)
-                                    if (err.response.status === 405)
-                                        setError("Wrong password or email")
-                                    // const error= localStorage.getItem("error")
-                                    // console.log(error);
-
-                                }
                             })
-                        console.log(localStorage.getItem('token'))
-
-
+                        console.log(values);
+                        handleMenuClick("/main")
                     }}>
-                    {({errors, touched}) => (
+
+                    {(formProps) => (
                         <Form
-                            //    onSubmit={this.handleSubmit}
                         >
                             <div>
                                 {error}
@@ -98,130 +99,80 @@ const CreatePost = (props) => {
                                 <div>
                                     <div><label>Name of post </label></div>
                                     <Field
-                                        //className={classes.field}
                                         placeholder="text"
-                                        name="name_of_post"
+                                        name="postHeader"
                                         type="text"
 
                                     />
                                     <div>
-                                        <ErrorMessage name="name_of_post"/>
+                                        <ErrorMessage name="postHeader"/>
                                     </div>
                                 </div>
+
                                 <div>
-                                    <div><label>Genre </label></div>
-                                    <Multiselect
-                                        options={genre.options} // Options to display in the dropdown
-                                        //selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
-                                        // onSelect={this.onSelect} // Function will trigger on select event
-                                        //onRemove={this.onRemove} // Function will trigger on remove event
-                                        displayValue="name" // Property name to display in the dropdown options
-                                    />
-                                    <div>
-                                        <ErrorMessage name="genre"/>
+                                {/*    <div><label>Genre </label></div>*/}
+                                {/*    <div>*/}
+                                {/*        <FieldArray name="genre">*/}
+                                {/*            <Multiselect*/}
+                                {/*                //name="genre"*/}
+                                {/*                options={genre.options} // Options to display in the dropdown*/}
+                                {/*                //selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown*/}
+                                {/*                // onSelect={this.onSeясясlect} // Function will trigger on select event*/}
+                                {/*                //onRemove={this.onRemove} // Function will trigger on remove event*/}
+                                {/*                displayValue="name" // Property name to display in the dropdown options*/}
+                                {/*            />*/}
+                                {/*        </FieldArray>*/}
                                     </div>
-                                </div>
                                 <div>
-                                    <div><label>primary skills </label></div>
-                                    {/*<div>Rhytnm Guitar:    <input type="checkbox" name="myCheckbox" value="1"*/}
-                                    {/*                              onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Acoustic Guitar: <input type="checkbox" name="myCheckbox" value="2"*/}
-                                    {/*                             onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Keyboard: <input type="checkbox" name="myCheckbox" value="3"*/}
-                                    {/*                             onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Piano:<input type="checkbox" name="myCheckbox" value="4"*/}
-                                    {/*                             onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Vocalist:<input type="checkbox" name="myCheckbox" value="5"*/}
-                                    {/*                             onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Background Singer:<input type="checkbox" name="myCheckbox" value="5"*/}
-                                    {/*                              onClick="selectOnlyThis(this)"/></div>*/}
-                                    {/*<div>Harmonics:<input type="checkbox" name="myCheckbox" value="5"*/}
-                                    {/*                              onClick="selectOnlyThis(this)"/></div>*/}
-
-                                    <div>
-                                        <ErrorMessage name="skills"/>
-                                    </div>
-
+                                    {/*        <ErrorMessage name="genre"/>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
+                                    {/*<div>*/}
+                                    {/*    <div><label>primary skills </label></div>*/}
+                                    {/*    <div>*/}
+                                    {/*    /!*<div>Rhytnm Guitar:    <input type="checkbox" name="myCheckbox" value="1"*!/*/}
+                                    {/*    /!*                              onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Acoustic Guitar: <input type="checkbox" name="myCheckbox" value="2"*!/*/}
+                                    {/*    /!*                             onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Keyboard: <input type="checkbox" name="myCheckbox" value="3"*!/*/}
+                                    {/*    /!*                             onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Piano:<input type="checkbox" name="myCheckbox" value="4"*!/*/}
+                                    {/*    /!*                             onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Vocalist:<input type="checkbox" name="myCheckbox" value="5"*!/*/}
+                                    {/*    /!*                             onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Background Singer:<input type="checkbox" name="myCheckbox" value="5"*!/*/}
+                                    {/*    /!*                              onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    /!*<div>Harmonics:<input type="checkbox" name="myCheckbox" value="5"*!/*/}
+                                    {/*    /!*                              onClick="selectOnlyThis(this)"/></div>*!/*/}
+                                    {/*    </div>*/}
+                                    {/*    <div>*/}
+                                    {/*        <ErrorMessage name="skills"/>*/}
                                 </div>
-                                <div>
-                                    <div><label>Location </label></div>
-                                    <div>
-                                        <PlacesAutocomplete
-                                            value={address}
-                                            onChange={handleChangeAddress}
-                                            onSelect={handleSelectAddress}
-                                        >
-                                            {({
-                                                  getInputProps,
-                                                  suggestions,
-                                                  getSuggestionItemProps,
-                                                  loading,
-                                              }) => (
-                                                <div>
-                                                    <input
-                                                        {...getInputProps({
-                                                            placeholder: "Enter Address...",
-                                                        })}
-                                                    />
-                                                    <div>
-                                                        {loading && <div>Loading...</div>}
-                                                        {suggestions.map((suggestion) => {
-                                                            const style = suggestion.active
-                                                                ? { backgroundColor: "#a83232", cursor: "pointer" }
-                                                                : { backgroundColor: "#ffffff", cursor: "pointer" }
-
-                                                            return (
-                                                                <div {...getSuggestionItemProps(suggestion, { style })}>
-                                                                    {suggestion.description}
-                                                                </div>
-                                                            )
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </PlacesAutocomplete>
-                                    </div>
 
 
-
-                                </div>
+                                <div><label>Location </label></div>
+                                <Field name="address" component={LocationApi}/>
                                 <div>
                                     <div><label>video/photo </label></div>
-                                    <Field
-                                        placeholder="video"
-                                        name="video"
-                                        type="text"
-                                    />
-
-                                    <div>
-                                        <ErrorMessage name="video"/>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div><label>video/photo </label></div>
-                                    <Field
-                                        placeholder="video"
-                                        name="video"
-                                        type="text"
-                                    />
-
-                                    <div>
-                                        <ErrorMessage name="video"/>
-                                    </div>
+                                    <input type="file" name="photo" onChange={  (event)=>{ formProps.setFieldValue('photo',event.target.files[0]) } }/>
+                                    {setSelectedFile(formProps.values["photo"])}
+                                      <img src={preview}  />
 
                                 </div>
                                 <div>
                                     <div><label>description </label></div>
-                                    <textarea>
-
-                               </textarea>
-
+                                    <Field
+                                        placeholder="description"
+                                        name="description"
+                                        type="text"
+                                    />
                                 </div>
                             </div>
 
                             <div>
-                                <button type="submit">Add post!</button>
+                                <button className={classes.btn} type="submit"
+
+                                >Add post!</button>
                             </div>
                         </Form>
                     )}

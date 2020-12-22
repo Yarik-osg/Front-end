@@ -1,10 +1,8 @@
 .btn {
-    color: #252537;
+    color: cornflowerblue;
 
-    width: 150px;
-    height: 75px;
-
-    padding: 0 20px;
+    width: 55px;
+    height: 37px;
     background: #fff;
     border-radius: 5px;
 
@@ -14,9 +12,11 @@
     cursor: pointer;
     text-align: center;
     transition: all 0.2s linear;
-
-    margin: 5% 5% 5% 5%;
-
+    position: absolute;
+    margin-top: 0.8%;
+    right: 22.7%;
     letter-spacing: 0.05em;
+
+
 
 }
